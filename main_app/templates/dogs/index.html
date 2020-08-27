@@ -5,9 +5,9 @@
 <h1>Dog List</h1>
 
 {% for dog in dogs %}
-  <div class="card">
+  <div class="card blue lighten-5">
     <a href="{% url 'detail' dog.id %}">
-      <div class="card-content">
+      <div class="card-content black-text">
         <span class="card-title">{{ dog.name }}</span>
         <p>Breed: {{ dog.breed }}</p>
         <p>Description: {{ dog.description }}</p>
