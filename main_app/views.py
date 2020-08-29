@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Dog, Toy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 
 # View Functions
 
@@ -31,3 +32,21 @@ class DogUpdate(UpdateView):
 class DogDelete(DeleteView):
     model = Dog
     success_url = '/dogs/'
+
+class ToyList(ListView):
+    model = Toy
+
+class ToyDetailView(DetailView):
+    model = Toy
+
+class ToyCreate(CreateView):
+    model = Toy
+    fields = '__all__'
+
+class ToyUpdate(UpdateView):
+    model = Toy
+    fields = '__all__'
+
+class ToyDelete(DeleteView):
+    model = Toy
+    success_url = '/toys/'
