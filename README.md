@@ -9,3 +9,6 @@ A dog collector app that provides lots of cuddly friends to learn about!
 ## User Stories
 * Users can view all dogs.
 * Users can view details of a dog.
+* Users can add a dog.
+* Users can delete a dog.
+* Users can update a dog.
