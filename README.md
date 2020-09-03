@@ -14,3 +14,4 @@ A dog collector app that provides lots of cuddly friends to learn about!
 * Users can update a dog.
 * Users can perform full CRUD with toys.
 * Users can add feedings to a dog.
+* Users can add or remove toy associations to a dog.
