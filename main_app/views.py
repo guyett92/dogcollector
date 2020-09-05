@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import Dog, Toy
+from .models import Dog, Toy, Photo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .forms import FeedingForm
+import uuid
+import boto3
+
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+BUCKET = 'dogcollector2'
+
 
 # View Functions
 
@@ -26,11 +32,25 @@ def dogs_detail(request, dog_id):
         'toys': toys_dog_doesnt_have
     })
 
+def add_photo(request, dog_id):
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            photo = Photo(url=url, dog_id=dog_id)
+            photo.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('detail', dog_id=dog_id)
+
 # Class-Based Views
 
 class DogCreate(CreateView):
     model = Dog
-    fields = '__all__'
+    fields = ['name', 'breed', 'description', 'age']
 
 class DogUpdate(UpdateView):
     model = Dog
