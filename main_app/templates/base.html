@@ -21,21 +21,17 @@
                     </li>
                 </ul>
                 <ul class="right">
-                    <li>
-                        <a href="{% url 'about' %}">About</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'dogs_create' %}">Add a Dog</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'toys_create' %}">Add a Toy</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'toys_list' %}">View All My Toys</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'index' %}">View All My Dogs</a>
-                    </li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'dogs_create' %}">Add a Dog</a></li>
+                        <li><a href="{% url 'toys_create' %}">Add a Toy</a></li>
+                        <li><a href="{% url 'toys_list' %}">View All My Toys</a></li>
+                        <li><a href="{% url 'index' %}">View All My Dogs</a></li>
+                        <li><a href="{% url 'logout' %}">Log Out {{ user.username }}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'signup' %}">Register</a></li>
+                        <li><a href="{% url 'login' %}">Log In</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
