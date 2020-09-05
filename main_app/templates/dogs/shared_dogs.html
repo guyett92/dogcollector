@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Shared Dogs</h1>
+
+{% for dog in dogs %}
+    {% if dog.shareable %}
+        <div class="card blue lighten-5">
+            <a href="{% url 'detail' dog.id %}">
+                <div class="card-content black-text">
+                    <span class="card-title">{{ dog.name }}</span>
+                    <p>Breed: {{ dog.breed }}</p>
+                    <p>Description: {{ dog.description }}</p>
+                    {% if dog.age > 0 %}
+                        <p>Age: {{ dog.age }}</p>
+                    {% else %}
+                        <p>Age: Puppy</p>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+{% empty %}
+    <h4>There are no shared dogs! Share some dogs!</h4>
+{% endfor %}
+
+{% endblock %}

@@ -19,4 +19,6 @@ urlpatterns = [
     path('dogs/<int:dog_id>/remove_toy/<int:toy_id>/', views.remove_toy, name='remove_toy'),
     path('dogs/<int:dog_id>/add_photo/', views.add_photo, name='add_photo'),
     path('accounts/signup/', views.signup, name='signup'),
+    path('dogs/shared/', views.shared_dogs, name='shared_dogs'),
+    path('dogs/<int:dog_id>/change_shared/', views.change_shared, name='change_shared'),
 ]

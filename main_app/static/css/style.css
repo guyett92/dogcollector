@@ -12,3 +12,8 @@ footer {
     padding-top: 0;
     text-align: right;
 }
+
+input[type="checkbox"]:not(:checked), input[type="checkbox"]:checked {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}

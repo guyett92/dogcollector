@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Feeding
+from .models import Feeding, Dog
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -9,6 +9,12 @@ class FeedingForm(ModelForm):
     class Meta:
         model = Feeding
         fields = ['date', 'meal']
+
+class SharedForm(ModelForm):
+    shareable = forms.BooleanField(widget=forms.CheckboxInput)
+    class Meta:
+        model = Dog
+        fields = ['shareable']
 
 class CustomUserCreationForm(forms.Form):
     first_name = forms.CharField(label='Enter first name', max_length=50)

@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .forms import FeedingForm, CustomUserCreationForm
+from .forms import FeedingForm, CustomUserCreationForm, SharedForm
 import uuid
 import boto3
 
@@ -28,13 +28,20 @@ def dogs_index(request):
     return render(request, 'dogs/index.html', {'dogs': dogs})
 
 @login_required
+def shared_dogs(request):
+    dogs = Dog.objects.filter(shareable=True)
+    return render(request, 'dogs/index.html', {'dogs': dogs})
+
+@login_required
 def dogs_detail(request, dog_id):
     dog = Dog.objects.get(id=dog_id)
     toys_dog_doesnt_have = Toy.objects.filter(user=request.user).exclude(id__in=dog.toys.all().values_list('id'))
     feeding_form = FeedingForm()
+    shared_form = SharedForm()
     return render(request, 'dogs/detail.html', {
         'dog': dog,
         'feeding_form': feeding_form,
+        'shared_form': shared_form,
         'toys': toys_dog_doesnt_have
     })
 
@@ -72,7 +79,7 @@ def signup(request):
 
 class DogCreate(LoginRequiredMixin, CreateView):
     model = Dog
-    fields = ['name', 'breed', 'description', 'age']
+    fields = ['name', 'breed', 'description', 'age', 'shareable']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -80,7 +87,7 @@ class DogCreate(LoginRequiredMixin, CreateView):
 
 class DogUpdate(LoginRequiredMixin, UpdateView):
     model = Dog
-    fields = ['breed', 'description', 'age']
+    fields = ['breed', 'description', 'age', 'shareable']
 
 class DogDelete(LoginRequiredMixin, DeleteView):
     model = Dog
@@ -119,6 +126,17 @@ def add_feeding(request, dog_id):
         new_feeding = form.save(commit=False)
         new_feeding.dog_id = dog_id
         new_feeding.save()
+
+    return redirect('detail', dog_id=dog_id)
+
+@login_required
+def change_shared(request, dog_id):
+    form = SharedForm(request.POST)
+
+    if form.is_valid():
+        share_change = form.save(commit=False)
+        share_change.dog_id = dog_id
+        share_change.save()
 
     return redirect('detail', dog_id=dog_id)
 
