@@ -5,6 +5,8 @@ A dog collector app that provides lots of cuddly friends to learn about!
 * Django
 * Materialize
 * PostgreSQL
+* Amazon S3
+* Heroku Deployed
 
 ## User Stories
 * Users can view all dogs.
@@ -15,3 +17,4 @@ A dog collector app that provides lots of cuddly friends to learn about!
 * Users can perform full CRUD with toys.
 * Users can add feedings to a dog.
 * Users can add or remove toy associations to a dog.
+* Users can view public dogs.
