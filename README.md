@@ -7,6 +7,7 @@ A dog collector app that provides lots of cuddly friends to learn about!
 * PostgreSQL
 * Amazon S3
 * Heroku Deployed
+* Python Decouple
 
 ## User Stories
 * Users can view all dogs.
